@@ -27,7 +27,8 @@ function Home() {
             description: "",
           }}
           onSubmit={async (values) => {
-            await sleep(3000);
+            await sleep(2000);
+            
             alert(JSON.stringify(values));
           }}
         >
@@ -118,6 +119,7 @@ export function FormikStepper({
 
   const [step, setStep] = useState(0);
   const currentChild = childrenArray[step];
+  const [completed, setCompleted] = useState(false);
 
   function isLastStep() {
     return step === childrenArray.length - 1;
@@ -130,6 +132,7 @@ export function FormikStepper({
       onSubmit={async (values, helpers) => {
         if (isLastStep()) {
           await props.onSubmit(values, helpers);
+          setCompleted(true);
         } else {
           setStep((currentStep) => currentStep + 1);
         }
@@ -137,9 +140,9 @@ export function FormikStepper({
     >
       {({isSubmitting}) => (
         <Form autoComplete="off">
-        <Stepper  alternativeLabel activeStep={step}>
+        <Stepper alternativeLabel activeStep={step}>
           {childrenArray.map((child,i) => (
-            <Step key={i}>
+            <Step key={i} completed={step > i || completed}>
               <StepLabel>{child.props.label}</StepLabel>
             </Step>
           ))}
@@ -149,14 +152,14 @@ export function FormikStepper({
         {step > 0 ? (
           <Button disabled={isSubmitting}
           style={{marginRight: '10px'}}
-            color="secondary"
+            color="primary"
             variant="contained"
             onClick={() => setStep((s) => s - 1)}
           >
             Back
           </Button>
         ) : null}
-        <Button  disabled={isSubmitting} color="secondary" variant="contained" type="submit">
+        <Button  disabled={isSubmitting} color="primary" variant="contained" type="submit">
           {isSubmitting ? 'Submitting' : isLastStep() ? "Submit" : "Next"}
         </Button>
         </div>
