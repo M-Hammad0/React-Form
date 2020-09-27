@@ -14,8 +14,11 @@ import React, { useState } from "react";
 
 const sleep = (time: number) => new Promise((acc) => setTimeout(acc,time))
 
+
+
 function Home() {
   return (
+    <Box marginTop={20} display="flex" justifyContent="center">
     <Card>
       <CardContent>
         <FormikStepper
@@ -42,7 +45,7 @@ function Home() {
                 fullWidth
                 name="firstName"
                 component={TextField}
-                label="firstName"
+                label="First Name"
               />
             </Box>
             <Box paddingBottom={2}>
@@ -50,7 +53,7 @@ function Home() {
                 fullWidth
                 name="lastName"
                 component={TextField}
-                label="lastName"
+                label="Last Name"
               />
             </Box>
             <Box>
@@ -95,6 +98,8 @@ function Home() {
         </FormikStepper>
       </CardContent>
     </Card>
+    </Box>
+    
   );
 }
 
